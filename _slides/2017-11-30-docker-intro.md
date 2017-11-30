@@ -21,7 +21,7 @@ reveal:
 2st slide
 -->
 <section data-markdown>
-  ## ¿Qué es docker?
+## ¿Qué es docker?
 
 Plataforma opensource para desarrollar, implantar y correr aplicaciones.
 
@@ -34,14 +34,17 @@ Plataforma opensource para desarrollar, implantar y correr aplicaciones.
 <!--
 3st slide
 -->
-<section data-markdown>
+<section>
+<div data-markdown>
 ### ¿Qué es docker?
-## Facilita el desarrollo
+## Desarrollo
 
   * Permite correr tus apps en cualquier máquina con las mismas dependencias sin importar el SO del host.
 
   * Por ejemplo, os podéis descargar este blog y sin tener ruby o jekyll instalado en tu ordenador,
   ejecutarlo.
+</div>
+  <small>Docker no necesita máquina virtual en sistemas linux pero sí en Windows Professional</small>
 
 </section>
 
@@ -51,7 +54,7 @@ Plataforma opensource para desarrollar, implantar y correr aplicaciones.
 -->
 <section data-markdown>
 ### ¿Qué es docker?
-## Facilita el despliegue
+## Despliegue
 
   * Al aislar la app en un container, desplegar en un servidor es cuestión de crear
   la misma imagen que en nuestro puesto de desarrollo.
@@ -63,23 +66,25 @@ Plataforma opensource para desarrollar, implantar y correr aplicaciones.
 -->
 <section data-markdown>
 ### ¿Qué es docker?
-## Facilita la infraestructura
+## Infraestructura
 
-  * La infraestructura necesaria ya no es implantada a mano en los sistemas.
+  * La infraestructura necesaria se **simplifica** al ser **aislada en containers**.
 
-  * Se crea mediante ficheros docker que describen los sistemas y programas necesarios para ejecutar nuestra aplicación.
+  * Se crea mediante **ficheros docker** que describen los sistemas y programas necesarios para ejecutar nuestra aplicación.
 
-  * ¿¿DevOps?? Gracias a Docker una misma persona se puede encargar de todos los sistemas de la empresa.
+  * ¿¿**DevOps**?? Gracias a Docker una misma persona se puede encargar de muchos sistemas.
 
 </section>
 <!--
 6th slide
 -->
-<section data-markdown>
+<section>
+<div data-markdown>
 ## Arquitectura
 
   ![Principal](/images/architecture.svg)
-
+</div>
+<small>Fuente: docker.com</small>
 </section>
 
 <!--
@@ -88,12 +93,15 @@ Plataforma opensource para desarrollar, implantar y correr aplicaciones.
 <section>
   <h3>Arquitectura</h3>
   <h2>VM vs Container</h2>
-  <div style="text-align: left; float: left;max-width:49%;">
+  <div style="text-align: left; float: left;max-width:45%;">
     <p data-markdown>![Principal](/images/docker-vm.png)</p>
   </div>
 
-  <div style="text-align: right; float: right;max-width:49%;">
+  <div style="text-align: right; float: right;max-width:45%;">
     <p data-markdown>![Principal](/images/docker-container.png)</p>
+  </div>
+  <div style="text-align: center;">
+    <small>Fuente: docker.com</small>
   </div>
 </section>
 
@@ -106,13 +114,13 @@ Plataforma opensource para desarrollar, implantar y correr aplicaciones.
 
 ## Image
 
-* Es un template (Dockerfile) de solo lectura con instrucciones para crear un *Container*. A menudo una imagen
+* Es un template (**Dockerfile**) de solo lectura con instrucciones para crear un **Container**. A menudo una imagen
 está basada en otra imagen.
 
-* Cada instrucción en el Dockerfile genera una *layer*.
+* Cada **instrucción** en el Dockerfile genera una **capa**.
 
-* Cuando cambias una *layer* (instruccion en Dockerfile) y
-reconstruyes la imagen, sólo se ejecutan las instrucciones que han cambiado. (*Útil!!!*)
+* Cuando cambias una **capa** (instruccion en Dockerfile) y
+reconstruyes la imagen, sólo se ejecutan las instrucciones que han cambiado. (**Útil!!!**)
 
 </section>
 
@@ -125,9 +133,9 @@ reconstruyes la imagen, sólo se ejecutan las instrucciones que han cambiado. (*
 
 ## Container
 
-* Es una instancia de una imagen.
+* Es una **instancia** de una imagen.
 
-* Esta instancia se puede parar, ejecutar, mover o borrar. También se puede conectar
+* Esta instancia se puede **parar, ejecutar, mover o borrar**. También se puede **conectar**
 a un container que esté en ejecución.
 
 * Básicamente es como tener una máquina virtual, sólo que consume menos recursos.
@@ -191,12 +199,11 @@ del container por el puerto 80.
 * **Jekyll**: Un static site generator. Creas fichero *md* y te los transforma
 en *html*.
 
+* Alojamiento https gratis por tener cuenta en [github](http://github.com).
+
 * **Dependencias**:
 
-  * ruby -> ni idea de la versión
-  * gcc, cmake, etc ...
-  * gem
-  * Jekyll
+  * ruby, gcc, cmake, gem, jekyll ...
 
 Requiere tiempo poner tu sistema en orden... Problemas con las dependencias... Solución....
 </section>
@@ -210,12 +217,144 @@ Requiere tiempo poner tu sistema en orden... Problemas con las dependencias... S
 <section data-markdown>
 ## Ejemplo - Jekyll
 
-* Nos basamos en una imagen ya [existente](https://github.com/envygeeks/jekyll-docker). Ohhh yeahh!!!
+* Nos basamos en una imagen ya [existente (envygeeks/jekyll-docker)](https://github.com/envygeeks/jekyll-docker). Ohhh yeahh!!!
 
 * Esta imagen permite que ejecutemos el container de la siguiente manera:
 
 ```
-  docker run --rm --volume="$PWD:/srv/jekyll" -it jekyll/builder:$JEKYLL_VERSION COMANDO A EJECUTAR
+  export JEKYLL_VERSION=3.5
+  docker run --rm --volume="$PWD:/srv/jekyll"\
+        -it jekyll/builder:$JEKYLL_VERSION\
+        COMANDO A EJECUTAR
 ```
 
+</section>
+
+<section data-markdown>
+## Ejemplo - Jekyll
+```
+  docker run --rm --volume="$PWD:/srv/jekyll"\
+        -it jekyll/builder:$JEKYLL_VERSION
+```
+* `--rm` para evitar que se muera el container al acabar el comando
+* `--volume` mapea dir_host:dir_container
+* `-it` mantener la consola abierta e interactiva
+*  Nombre de la imagen.
+</section>
+
+<section data-markdown>
+### Ejemplo - Jekyll
+```
+  docker run --rm --volume="$PWD:/srv/jekyll"\
+        -it jekyll/builder:$JEKYLL_VERSION jekyll build
+```
+```
+  docker run --rm --volume="$PWD:/srv/jekyll"\
+        -it jekyll/builder:$JEKYLL_VERSION jekyll serve
+```
+```
+  export JEKYLL_VERSION=3.5
+  docker run --rm --volume="$PWD:/srv/jekyll" \
+        -it jekyll/minimal:$JEKYLL_VERSION \
+        jekyll build jekyll serve
+```
+Pero estos containers no se comunican con el exterior ... ni
+puedes ver las dependencias del proyecto para modificar el layout.
+</section>
+
+<section data-markdown>
+### Ejemplo - Jekyll
+```
+  docker run --rm --volume="$PWD:/srv/jekyll"\
+        --port="4000:4000"
+        --volume="$PWD/vendor/bundle/:/usr/local/bundle"
+        -it jekyll/builder:$JEKYLL_VERSION jekyll build
+```
+```
+  docker run --rm --volume="$PWD:/srv/jekyll"\
+        -p 4000:4000 -v $PWD:/usr/local/bundle
+        -it jekyll/builder:$JEKYLL_VERSION jekyll serve
+```
+* Habilitamos un puerto donde escucha el host y escucha el container [host:container]
+* Mapeamos un volumen donde compartimos los ficheros entre host y container.
+* Y solo hemos visto el comando **run** ...
+</section>
+
+<section data-markdown>
+## Ejemplo - Jekyll
+### Ventajas:
+* No necesitas bajarte las dependencias.
+* Cualquier persona nueva puede entrar a desarrollar rápidamente.
+* Los entornos de test/integración se simplifican igualmente.
+* Se facilitan y agilizan los despliegues. Se evitan redespliegues innecesarios
+de librerías y dependencias.
+</section>
+
+<section data-markdown>
+## Ejemplo - Jekyll
+### Mejoras:
+* Los comandos son muy difíciles: **docker-compose**
+
+Los anteriores comandos se pueden describir como si fueran servicios en
+un fichero **docker-compose**.
+
+Esto nos permite además describir un cluster o **swarm** docker para ejecutar
+dichos servicios.
+</section>
+
+<section data-markdown>
+## Ejemplo - Jekyll
+### docker-compose
+```
+version: '3'
+
+services:
+  site:
+    build:
+      context: .
+    command: jekyll serve
+    container_name: boream-blog
+    image: boream/boream-blog
+    ports:
+      - "4000:4000"
+    volumes:
+      - .:/srv/jekyll
+      - ./vendor/bundle:/usr/local/bundle
+
+```
+</section>
+
+<section data-markdown>
+## Ejemplo - Jekyll
+### docker-compose
+Para usar el docker-compose anterior he creado una imagen que parte de
+[envygeeks/jekyll-docker](https://github.com/envygeeks/jekyll-docker), dónde se
+instala algunas dependencias más entre ellas una **bash** para facilitar el acceso
+al container.
+```
+FROM jekyll/jekyll:latest
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/v3.6/community" >> /etc/apk/repositories
+RUN apk update
+RUN apk add bash bash-doc bash-completion cmake
+EXPOSE 4000
+
+```
+</section>
+
+<section data-markdown>
+## Ejemplo - Jekyll
+### docker-compose:
+```
+docker-compose up
+```
+Esto creará una imagen y instanciará el container ejecutando al final de todo
+el comando:
+```
+jekyll serve
+```
+```
+docker-compose run site jekyll serve
+docker-compose run site jekyll build
+```
+Los comandos anteriores
 </section>
