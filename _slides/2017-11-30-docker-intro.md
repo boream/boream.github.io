@@ -12,6 +12,7 @@ reveal:
 -->
 <section data-markdown>
   # {{ page.title }}
+  ![Logo](/images/docker-ico.png)
 </section>
 
 
