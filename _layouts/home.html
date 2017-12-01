@@ -7,14 +7,7 @@ layout: default
   <h1 class="page-heading">Slides</h1>
   <ul class="post-list">
     {% for slide in site.slides %}
-      <li>
-        {% assign date_format = site.minima.date_format | default: "%b %-d, %Y" %}
-        <span class="post-meta">{{ slide.date | date: date_format }}</span>
-
-        <h2>
-          <a class="post-link" href="{{ slide.url | relative_url }}">{{ slide.title | escape }}</a>
-        </h2>
-      </li>
+    <li><span>{{ slide.date | date_to_string }}</span> » <a href="{{ slide.url }}" title="{{ slide.title }}">{{ slide.title }}</a></li>
     {% endfor %}
   </ul>
 
