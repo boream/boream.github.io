@@ -79,6 +79,6 @@ exclude:
   - vendor/cache/
   - vendor/gems/
   - vendor/ruby/
-  - reveal.js/plugin/markdown/example.html
-  - reveal.js/test/simple.html
+  - reveal.js/plugin/markdown/example.md
+  - reveal.js/test/simple.md
   - reveal.js/css/theme/README.md
