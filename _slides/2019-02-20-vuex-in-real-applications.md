@@ -12,5 +12,5 @@ reveal:
 -->
 <section data-markdown>
   # {{ page.title }}
-  ![Logo](/images/docker-ico.png)
+  ![Logo](/images/vuex-logo.png)
 </section>
